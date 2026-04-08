@@ -24,7 +24,7 @@ export default function SignUp() {
       console.log("Password is incorrect");
     }
 
-    const url = `${import.meta.env.VITE_API_URL}/signup`;
+    const url = `${import.meta.env.VITE_API_URL}/user/signup`;
     console.log(url);
     const responses = await fetch(url, {
       method: "POST",
@@ -33,7 +33,7 @@ export default function SignUp() {
       },
       body: JSON.stringify(user),
     })
-      .then(async(res) => {
+      .then(async (res) => {
         if (res.ok) {
           const errorText = await res.text();
           console.error("Server error response:", errorText);
@@ -55,12 +55,12 @@ export default function SignUp() {
 
   return (
     <main>
-      <section style={{ display: "flex" }}>
+      <section className="flex w-310 m-auto mt-30 justify-center">
         <div
-          className="left"
+          className="left h-150!"
           style={{
-            borderBottomRightRadius: "40px",
-            borderTopRightRadius: "40px",
+            borderBottomLeftRadius: "40px",
+            borderTopLeftRadius: "40px",
           }}
         >
           <img src={GroupImg} alt="BookWorm Logo" />
@@ -69,7 +69,7 @@ export default function SignUp() {
             SIGN IN
           </button>
         </div>
-        <div className="right">
+        <div className="right h-150! rounded-bl-none! rounded-tl-none! rounded-br-[40px] rounded-tr-[40px] border-r! ">
           <label htmlFor="Logo">
             Sign Up <img src={darkLogo} alt="Logo" />
           </label>
@@ -118,7 +118,7 @@ export default function SignUp() {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
             <input
-              className="w-[450px] border p-2 pl-5 ml-auto rounded-xl mb-3"
+              className="w-md border p-2 pl-5 ml-auto rounded-xl mb-3"
               type="password"
               name={user.repeat_password}
               id="re-password"

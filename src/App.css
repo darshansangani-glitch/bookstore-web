@@ -7,7 +7,7 @@ body {
 
 .left {
   width: 50%;
-  height: 100vh;
+  height: 60vh;
   display: grid;
   background-color: #000000;
   justify-content: center;
@@ -46,14 +46,16 @@ body {
 }
 
 .right {
-  width: 476px;
-  height: 100vh;
+  width: 50%;
+  height: 60vh;
   display: grid;
+  border: 1px solid black;
   justify-content: center;
   align-items: center;
-  border-bottom-right-radius: 40px;
-  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-top-left-radius: 40px;
   align-content: center;
+  border-right: 0px;
   justify-items: center;
   margin: auto;
 }
@@ -235,7 +237,6 @@ header {
 .nav-bar > a {
   text-decoration: none;
   color: white;
-  border-bottom: 1px solid white;
   font-size: 20px;
   font-family: "Montserrat";
   font-weight: 500;
@@ -480,7 +481,6 @@ main {
   display: flex;
   justify-content: center;
 }
-
 
 .book-add-container {
   width: 1324px;

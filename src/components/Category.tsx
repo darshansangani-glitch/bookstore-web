@@ -60,7 +60,7 @@ export default function CategorySection() {
     return (
       <div className={image.className} style={{ position: "relative" }}>
         <Link to={image.src} className="imgs">
-          <img src={image.src} alt={image.alt} style={style}/>
+          <img src={image.src} alt={image.alt} style={style} />
           <figcaption style={spanStyle}>{image.span}</figcaption>
         </Link>
       </div>

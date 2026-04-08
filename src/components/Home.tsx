@@ -65,6 +65,7 @@ export const FeaturedBooks = () => {
   const FeaturedBooksData: React.ReactNode = FeatureBooks.map((book) => {
     return (
       <BookCards
+        key={book.id}
         id={book.id}
         name={book.name}
         category={book.category}
