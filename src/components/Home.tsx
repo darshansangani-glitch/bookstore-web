@@ -1,9 +1,13 @@
 import React from "react";
 import MoonImg from "../assets/moon-landing-hero.jpg";
+import LostForest from '../assets/The Lost Forest.jpeg';
+import Hobbit from '../assets/The Hobbit.webp'
+import img3 from '../assets/3.jpg'
 
 interface Featured {
   id: string;
   name: string;
+  author: string
   category: string;
   src: string;
 }
@@ -12,52 +16,60 @@ const FeatureBooks: Featured[] = [
   {
     id: "0",
     name: "The Seven Husbands of Evelyn Hugo",
+    author: 'Smit Desai',
     category: "Fiction",
     src: "https://m.media-amazon.com/images/I/81LscKUplaL._AC_UF1000,1000_QL80_.jpg",
   },
   {
     id: "1",
-    name: "The Silent Patient",
+    name: "The Lost Forest",
+    author: 'Smit Desai',
     category: "Thriller",
-    src: "https://m.media-amazon.com/images/I/81LscKUplaL._AC_UF1000,1000_QL80_.jpg",
+    src: LostForest,
   },
   {
     id: "2",
-    name: "Atomic Habits",
+    name: "The Hobbits",
+    author: 'Smit Desai',
     category: "NonFiction",
-    src: "https://m.media-amazon.com/images/I/81LscKUplaL._AC_UF1000,1000_QL80_.jpg",
+    src: Hobbit,
   },
   {
     id: "3",
-    name: "The Midnight Library",
+    name: "The Silver Crow",
+    author: 'Smit Desai',
     category: "Fiction",
-    src: "https://m.media-amazon.com/images/I/81LscKUplaL._AC_UF1000,1000_QL80_.jpg",
+    src: img3,
   },
 ];
 
-export const BookCards = ({ id, name, category, src }: Featured) => {
+export const BookCards = ({ id, name, category, src, author }: Featured) => {
   return (
-    <div id={id} className="w-60! h-92! relative ">
+    <div id={id} className="w-60! h-112! relative shadow-xl shadow-gray-500">
       <img
         src={src}
         alt=""
-        className="w-70! h-75! rounded-tl-xl rounded-tr-xl"
+        className="w-70! h-80! rounded-tl-xl rounded-tr-xl"
       />
       <span className="absolute left-2  top-2 text-white font-extrabold text-[12px] bg-orange-300  rounded-2xl pl-2 pr-2    ">
         {category}
       </span>
-      <div className=" flex flex-col  items-center">
-        <h1 className="text-[20px]! p-3 max-w-52! flex  text-ellipsis! overflow-hidden! whitespace-nowrap!   text-gray-700 font-semibold">
+      <div className=" p-3 w-60 flex flex-1 flex-col h-35! border bg-gray-100 border-slate-200 rounded-b-2xl items-center ">
+        <span className="w-full  text-[20px]! text-gray-400 font-bold">
           {name}
-        </h1>
-        <button
-          className="p-4 min-w-55! mb-4 rounded-xl bg-orange-400 text-white border"
-          type="submit"
-        >
-          Request Book
-        </button>
+        </span>
+        <span>{author}</span>
+        <div className="flex w-full ">
+          <button
+            className="p-2 min-w-40! mb-4 rounded-xl bg-orange-400 text-white border"
+            type="submit"
+          >
+            Request Book
+          </button>
+        </div>
       </div>
     </div>
+
   );
 };
 
@@ -67,6 +79,7 @@ export const FeaturedBooks = () => {
       <BookCards
         key={book.id}
         id={book.id}
+        author={book.author}
         name={book.name}
         category={book.category}
         src={book.src}
@@ -80,8 +93,10 @@ export const FeaturedBooks = () => {
           Featured Books
         </h1>
       </div>
-      <div className="flex w-full! justify-center items-center  gap-10 ">
-        {FeaturedBooksData}
+      <div className="w-full flex justify-center ">
+        <div className="flex w-fit! justify-center items-center  gap-10 bg-white shadow-xl rounded-2xl shadow-gray-400  h-160 p-5 ">
+          {FeaturedBooksData}
+        </div>
       </div>
     </>
   );
