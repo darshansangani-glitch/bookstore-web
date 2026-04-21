@@ -117,7 +117,7 @@ export default function Slick() {
 
                 {bookCards.map((card, index) => (
                     <div key={index} className={`relative w-full flex! justify-evenly h-200!  inset-0 z-4000  items-center  transition-opacity  `}>
-                        <img src={card.backgroundImg ? card.backgroundImg : ''} alt="" className='top-1 h-200 w-460 fixed' />
+                        <img src={card.backgroundImg ? card.backgroundImg : ''} alt="" className='top-1 h-200 w-screen fixed' />
                         <div className='w-full inset-0 bg-black/60 backdrop-blur-xs h-200 absolute flex flex-1 justify-evenly items-center '>
 
                             <div className={`${card.quotes ? 'w-0' : 'w-140'} text-white flex flex-col gap-10`}>
