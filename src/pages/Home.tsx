@@ -31,10 +31,9 @@ function IntroSection() {
 export default function Home() {
   return (
     <>
-      <main className="pt-15 flex flex-col justify-center main-container">
+      <main className="w-screen pt-15 flex flex-col justify-center">
         <IntroSection />
         <FeaturedBooks />
-        <QuotesSection />
       </main>
     </>
   );
