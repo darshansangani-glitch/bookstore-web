@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 export default function NavBar() {
     return (
-        <div className='nav-bar border-0! hover:text-gray-300!'>
-            <Link to="/home">Home</Link>
-            <Link to='/books'>Books</Link>
-            <Link to='/book-requests'>Requests</Link>
+        <div className='flex gap-10 font-semibold font-[poppins] text-2xl border-0! '>
+            <Link className='hover:text-gray-400' to="/home">Home</Link>
+            <Link className='hover:text-gray-400' to='/books'>Books</Link>
+            <Link className='hover:text-gray-400' to='/book-requests'>Requests</Link>
         </div>
     )
 }
