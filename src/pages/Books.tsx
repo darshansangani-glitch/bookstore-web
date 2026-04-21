@@ -1,70 +1,21 @@
-import { FaBook } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
 import { useAppSelector } from "../redux/hooks";
-import { FaBookBookmark } from "react-icons/fa6";
 import { api } from "../utils/api";
-import { BookCard, SearchBar } from "../components/Books";
-
-interface book<T> {
-  _id: T;
-  book_name: T;
-  description: T;
-  author: T;
-  category: T;
-  quantity: T;
-  book_image: null;
+import AllBooks from "../components/Books/Books";
+import bg1 from '../assets/hobbitbg.jpg'
+import Intro from "../components/Intro";
+export interface book {
+  _id: string;
+  book_name: string;
+  description: string;
+  author: string;
+  category: string;
+  quantity: string;
+  book_image: string;
+  book_image_filename: string
 }
 
-// function FilterSection() {
-//   return (
-//     <div className="filter-category">
-//       <select
-//         name="role"
-//         className="select-role"
-//         style={{
-//           height: "50px",
-//           border: "0px",
-//           borderBottom: "2px solid grey",
-//           borderRadius: "none",
-//         }}
-//         id="role"
-//       >
-//         <option value="">--Select Role--</option>
-//         <option value="Fantasy">Fantasy</option>
-//         <option value="Engineer">Engineer</option>
-//         <option value="Finance">Finance</option>
-//         <option value="Higher">Higher</option>
-//         <option value="Management">Management</option>
-//       </select>
-//     </div>
-//   );
-// }
-
 export default function Books() {
-  const [handleRequest, setHandleRequest] = React.useState([
-    {
-      user_id: "",
-      book_id: "",
-      timestamp: "",
-      req_status: "",
-    },
-  ]);
-  const token = useAppSelector((s) => s.auth.token);
-  const handleRequestSubmission = async <T extends string>(id: T) => {
-    try {
-
-      const result = await api.post(
-        `/request/add/${id}`,
-        { id },
-        token ? token : "",
-      );
-      setHandleRequest(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const [books, setBooks] = useState([
     {
       _id: "",
@@ -75,51 +26,29 @@ export default function Books() {
       category: "",
       shelf_name: "",
       book_image: "",
+      book_image_filename: ''
     },
   ]);
+  const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(0);
-  const [searchTerm, setSearchTerm] = React.useState("");
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-    setPage(0);
-  };
-
-  const filteredData = React.useMemo(() => {
-    if (!searchTerm) return books;
-    const lowercasedTerm = searchTerm.toLowerCase();
-
-    return books.filter((row) => {
-      return Object.values(row).some((val) =>
-        String(val).toLowerCase().includes(lowercasedTerm),
-      );
-    });
-  }, [books, searchTerm]);
-
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [search, setSearch] = React.useState("");
+  const [total, setTotal] = React.useState(0);
+  const [category, setCategory] = React.useState("")
+  const [uniqueCate, setUniqueCate] = React.useState<string[]>()
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const displayedData = filteredData.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
-  );
-
-  const LoadBooks = async () => {
+  const token = useAppSelector(s => s.auth.token)
+  const loadBooks = async () => {
     try {
-      const data = await api.get("/book", token ? token : "");
-      const withIds = data.Books.map((item: book<string>) =>
-        item._id ? item : { ...item, _id: item._id ?? nanoid() },
+      setLoading(true)
+      const data = await api.get(`/book?page=${page + 1}&limit=${rowsPerPage}&search=${search}&category=${category}`, token ? token : '');
+      const withIds = data.Books.map((item: book) =>
+        item._id ? item : { ...item, _id: item._id },
       );
       setBooks(withIds);
+      setTotal(data.totalCount);
+      setUniqueCate(data.category)
+      setLoading(false)
     } catch (error) {
       if (error) {
         console.log({ message: error });
@@ -128,44 +57,37 @@ export default function Books() {
   };
 
   useEffect(() => {
-    LoadBooks();
-  }, []);
-
-  const bookCardsData = displayedData.map((b) => {
-    return (
-      <BookCard key={b._id} id={b._id} src={`${import.meta.env.VITE_SERVER_URL}img/${b._id}`} category={b.category} bookName={b.book_name} description={b.description} quantity={b.quantity} handleRequestSubmission={handleRequestSubmission} />
-    );
-  });
+    loadBooks()
+  }, [search, category, page]);
 
   return (
     <>
-      <div className="w-full justify-center">
-        <div
-          className="filter-Section mt-25! flex-col! w-310! p-6 mr-auto! ml-auto! justify-items-start items-start"
-          style={{ gap: "20px" }}
-        >
-          <h1 className="text-4xl w-full! p-3 mb-5 flex gap-3 border-2 rounded-2xl border-gray-500 justify-center font-bold text-gray-400">
-            <FaBookBookmark />
-            Requested Books Inventory
-          </h1>
-
-          <SearchBar
-            key={nanoid()}
-            searchTerm={searchTerm}
-            handleSearchChange={handleSearchChange}
+      <div className="w-full justify-center mt-2!">
+        <Intro title={'Books'} content={'Browse Books And Request them and Read them...'} src={bg1} />
+          <AllBooks
+            data={books}
+            serverSide={true}
+            total={total}
+            page={page}
+            search={search}
+            rowsPerPage={rowsPerPage}
+            uniqueCategory={uniqueCate}
+            onPageChange={(newPage: number) => setPage(newPage)}
+            onRowsPerPageChange={(newRows: number) => {
+              setRowsPerPage(newRows);
+              setPage(0);
+            }}
+            onSearch={(term: string) => {
+              setSearch(term);
+              setPage(0);
+            }}
+            onCategory={(term: string) => {
+              setCategory(term)
+              setPage(0)
+            }}
+            loading={loading}
           />
-          {/* <FilterSection /> */}
         </div>
-        {displayedData.length == 0 ? (
-          <div className="w-full! flex  gap-2 justify-center! mb-10 text-7xl p-50">
-            <FaBook /> Book Not Found
-          </div>
-        ) : (
-          <section className="book-card-containers w-310! ml-auto! mr-auto!">
-            {bookCardsData}
-          </section>
-        )}
-      </div>
     </>
   );
 }
