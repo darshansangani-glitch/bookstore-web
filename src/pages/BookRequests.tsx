@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header.js";
 import RequestCard from "../components/Requests.js";
 import { useAppSelector } from "../redux/hooks.js";
-import { FaBookBookmark } from "react-icons/fa6";
 import { api } from "../utils/api.js";
+import Intro from "../components/Intro.js";
+import bg1 from '../assets/hobbitbg.jpg'
 
 export interface Requests {
   _id?: string;
@@ -11,18 +12,17 @@ export interface Requests {
   book_id?: string;
   timestamp?: string;
   req_status?: "Pending" | "Approved";
-  BookDetails: [
-    {
-      _id: string;
-      book_name: string;
-      description: string;
-      author: string;
-      category: string;
-      quantity: string;
-      book_image: string;
-      book_image_filename: string;
-    },
-  ];
+  BookDetails:
+  {
+    _id: string;
+    book_name: string;
+    description: string;
+    author: string;
+    category: string;
+    quantity: string;
+    book_image: string;
+    book_image_filename: string;
+  }[],
 }
 
 export default function BookRequests() {
@@ -98,12 +98,13 @@ export default function BookRequests() {
   return (
     <>
       <Header />
-      <div className="ml-auto w-310! mr-auto!  mt-20 min-w-50!   ">
-        <h1 className="text-4xl p-3 mb-5 flex gap-3 border-2 rounded-2xl border-gray-500 justify-center font-bold text-gray-400">
-          <FaBookBookmark />
-          Requested Books Inventory
-        </h1>
-        {requestData}
+      <div className="w-full justify-center ">
+        <Intro title={'Book Requests'} content={'Get Your All Requests and After Reading your book Return them...'} src={bg1} />
+        <section className="flex my-20 flex-1 justify-center w-full ">
+          <div className="grid grid-cols-2 gap-5">
+            {requestData}
+          </div>
+        </section>
       </div>
     </>
   );
