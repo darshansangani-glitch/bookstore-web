@@ -1,17 +1,15 @@
 import NavBar from "./NavBar.js";
-import lightLogo from '../assets/lightLogo.png'
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from "../redux/hooks.js";
-import { logout } from "../redux/features/slice/authSlice.js";
+import {  useNavigate } from 'react-router-dom'
+import { useAppSelector } from "../redux/hooks.js";
 import { useEffect, useState } from "react";
 import { api } from "../utils/api.js";
-import { FaUserCircle } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
-    const navigate = useNavigate();
-
-    const dispatch = useAppDispatch()
-    const isAuthenticated = useAppSelector(s => s.auth.status)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const pathname = location.pathname
+    console.log(pathname)
     const token = useAppSelector(s => s.auth.token)
     const [user, setUser] = useState({
         name: '',
@@ -30,8 +28,11 @@ export default function Header() {
             loadUserInfo()
         }, 1000)
     }, [])
+
+
     return (
-        <header className="w-full  fixed!  z-1030!  flex!  justify-between! px-15 py-10 border-b border-gray-400">
+        <>
+            {/* <header className="w-full  fixed!  z-1030!  flex!  justify-between! px-15 py-10 border-b border-gray-400">
             <div className="w-13 flex items-center text-3xl gap-2 font-semibold">
                 <img src={lightLogo} alt="Logo" />
                 <label htmlFor="Logo"><span className="text-green-500">Book</span>Worm</label>
@@ -46,6 +47,16 @@ export default function Header() {
                     <span className="font-mono! text-[14px]!">{user.role}</span>
                 </div>
             </div>
-        </header>
+        </header> */}
+            <header className="bg-[#F3F2EC]! flex justify-center! py-10 sticky! overflow-hidden top-0 z-1030!  ">
+                <div className="w-355 flex justify-between text-black p-5 items-center">
+                    <div className="">
+                        <button className="font-light cursor-pointer text-5xl font-unicase text-black [line-spacing: -2%]!" onClick={() => pathname == '/home' ? window.scrollTo(0, 0) : navigate('/home')}><span className="text-black font-bold">Book</span>Worm</button>
+                    </div>
+                    <div className="font-plus p-5"> <NavBar /> </div>
+                </div>
+
+            </header>
+        </>
     )
 }
