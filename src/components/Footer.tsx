@@ -1,22 +1,63 @@
-import {  useNavigate } from "react-router-dom"
+import { FaFacebookF, FaLinkedinIn, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
 
 export default function Footer() {
-    const navigate = useNavigate()
-    const handleNavigation = ()=>{
-        navigate('/books')
-    }
+    const about = ['VISION', 'ARTICLES', 'CAREERS', 'SERVICE TERMS', 'DONATE']
+    const discover = ['HOME', 'BOOKS', 'AUTHORS', 'CATEGORIES']
+    const account = ['SIGN IN', 'VIEW CART', 'MY WISHLIST', 'TRACK MY ORDER']
+    const help = ['HELP CENTER', 'SUGGESTION', 'REPORT ISSUE', 'CONTACT US']
     return (
-        <div className=" p-20 h-150! border flex  flex-col items-center justify-evenly gap-30 bg-black">
-            <div className=" text-gray-300 justify-center items-center flex-col flex gap-5">
-                <span className="text-4xl  font-bold text-green-500 flex justify-center items-center">Request Your New Book Today Now!</span>
-                <div className="flex flex-col justify-center items-center">
-                    <span className="text-[18px] w-fit text-gray-400 ">Get Reading With BookWorm Today. Start Reading Your First Book With BookWorm By Requesting Today!!</span>
-                    <span className="text-[18px] w-100 text-gray-400"> Enjoy the Latest Trends and Gain Knowledge</span>
-                </div>
+        <div className="w-full h-100 flex flex-col items-center justify-center gap-3">
+            <div className="w-full flex justify-center items-center border-b  flex-col h-80">
+                <div className="flex flex-1 justify-between w-355 ">
+                    <span className="w-54.25 h-14 text-[46px] font-unicase font-light"><span className="font-bold">BOOK</span>WORM</span>
 
-                <button className="w-70 p-4 px-6 text-xl hover:bg-green-600 text-white bg-green-500 font-bold rounded-4xl" onClick={handleNavigation}>Request Book Today!</button>
+                    <div className="flex flex-col gap-5">
+                        <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">About Us</span>
+                        <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium ">
+                            {about.map(item => {
+                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            })}
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                        <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">Discover</span>
+                        <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
+                            {discover.map(item => {
+                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            })}
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                        <span className="w-40.25 h-9.5 text-[28px] text-[#111111] font-prata">My Account</span>
+                        <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
+                            {account.map(item => {
+                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            })}
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                        <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">Help</span>
+                        <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
+                            {help.map(item => {
+                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="border" />
             </div>
-            <span className="h-45 text-[250px] font-bold text-gray-700"><span className="text-green-200">Book</span>Worm</span>
+            <div className="flex justify-between w-355 items-center h-8">
+                <span>© 2021 Templates Jungle. All rights reserved.</span>
+                <div className="flex w-43 h-3.5 justify-between text-[14px] ">
+                    <FaFacebookF />
+                    <FaInstagram />
+                    <FaLinkedinIn />
+                    <FaTwitter />
+                    <FaWhatsapp />
+                </div>
+            </div>
+
         </div>
     )
 }

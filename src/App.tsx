@@ -8,6 +8,7 @@ import Login from "./pages/Login.js";
 import SignUp from "./pages/SignUp.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -43,7 +44,6 @@ function App() {
       ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
 

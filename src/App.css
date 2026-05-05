@@ -1,12 +1,138 @@
 @import "tailwindcss";
 
+@theme {
+  --font-prata: "Prata", serif;
+  --font-plus: "Plus Jakarta Sans", sans-serif;
+  --font-unicase: "Cormorant Unicase", serif;
+}
 
 body {
   font-family: "Montserrat", sans-serif;
   margin: 0;
 }
 
+.swiper-pagination-bullet {
+  width: 34px !important;
+  height: 33px !important;
+  text-align: center !important;
+  line-height: 30px !important;
+  font-size: 54px !important;
+  color: #d7d5cc !important;
+  opacity: 1 !important;
+  background: none !important;
+}
+.swiper-pagination-bullet-active {
+  color: #74642f !important;
+  border: 1px solid #d7d5cc !important;
+  background: none !important;
+}
+/* }
+.slick-next:before,
+.slick-prev:before {
+  font-size: 40px !important  ;
+  color: #808080 !important;
+}
 
+.intro-slider > .slick-next {
+  right: 70px !important;
+}
+
+.slick-prev,
+.slick-next {
+  top: 50% !important;
+  background-color: #f3f2ec !important;
+  width: 62px !important;
+  height: 62px !important;
+  border-radius: 37px !important;
+  bottom: 25px !important;
+  z-index: 10 !important;
+}
+
+/* .swiper-button-prev {
+background-image: url(bookstore-web/src/assets/arrow.png) !important;
+background-repeat: no-repeat;
+background-size: 100% auto;
+background-position: center;
+}
+
+.swiper-button-next {
+background-image: url(bookstore-web/src/assets/arrow.png) !important;
+background-repeat: no-repeat;
+transform: rotate(180);
+background-size: 100% auto;
+background-position: center;
+} */
+
+/* .swiper-button-next::after {
+display: none;
+}
+
+.swiper-button-prev::after {
+display: none;
+} */
+
+.slick-prev:before,
+.slick-next:before {
+  color: #8c8c8c !important;
+  padding: 7px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-radius: 66px !important;
+  border: 1px solid black !important;
+  border-color: #e5e3da !important;
+  font-family: sans-serif !important;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: #e7e5dc !important;
+}
+
+.intro-slider > .slick-prev {
+  left: 50px !important;
+}
+
+.feature-book > .slick-prev {
+  left: -6%;
+}
+.feature-book > .slick-next {
+  right: -5%;
+}
+
+.slick-dots {
+  bottom: -40px !important;
+}
+
+.intro-slider > .slick-dots {
+  width: auto;
+  left: 18%;
+  bottom: 100px !important;
+}
+.feature-book > .slick-dots {
+  width: auto;
+  left: 45%;
+  bottom: -100px !important;
+}
+
+.slick-dots > .slick-active {
+  border: 1px solid #d7d5cc;
+  border-radius: 16px;
+}
+.slick-dots li button:before {
+  font-family: sans-serif !important;
+  font-size: 40px !important;
+  line-height: 0px !important;
+  top: 12px !important;
+  left: -7px !important;
+  padding: 1px !important;
+  width: 39px !important;
+  height: 26px !important;
+}
+
+.slick-dots li {
+  width: 28px !important;
+  height: 28px !important;
+} */
 
 .left {
   width: 50%;
@@ -589,4 +715,50 @@ main {
   height: 40px;
   border-radius: 7px;
   border: 0px;
+}
+
+/*
+Source - https://stackoverflow.com/a/56640502
+Posted by BugsArePeopleToo
+Retrieved 2026-04-23, License - CC BY-SA 4.0
+*/
+
+.container {
+  position: relative;
+}
+.container:before {
+  content: "";
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 2;
+}
+.container:hover:before {
+  opacity: 1;
+}
+.container img {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.btn {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  top: 60%;
+  line-height: 40px;
+  cursor: pointer;
+  z-index: 3;
+  color: red;
+}
+.container:hover .btn {
+  opacity: 1;
 }
