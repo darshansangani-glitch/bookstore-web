@@ -34,8 +34,8 @@ export default function Books() {
     },
   ]);
   const [loading, setLoading] = React.useState(true);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+  const [rowsPerPage, setRowsPerPage] = React.useState(12);
   const [search, setSearch] = React.useState("");
   const [total, setTotal] = React.useState(0);
   const [category, setCategory] = React.useState<string[]>([]);

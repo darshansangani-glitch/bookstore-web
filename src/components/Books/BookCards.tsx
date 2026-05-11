@@ -15,7 +15,6 @@ interface cardsProps<T> {
   buy_price: number
 }
 
-
 export default function BookCard(props: cardsProps<string>) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
