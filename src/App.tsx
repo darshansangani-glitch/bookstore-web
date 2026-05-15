@@ -1,7 +1,8 @@
 import "./App.css";
 import Protected from "./components/Protected.js";
 import AppLayout from "./layout/AppLayout.js";
-import BookRequests from "./pages/BookRequests.js";
+import BookDetailPage from "./pages/BookDetailsPage.js";
+import CartPage from "./pages/Cart.js";
 import Books from "./pages/Books.js";
 import Home from "./pages/Home.js";
 import Login from "./pages/Login.js";
@@ -36,11 +37,15 @@ function App() {
               element: <Home />,
             },
             {
-              path: "/book-requests",
-              element: <BookRequests />,
+              path: "/books/:id",
+              element: <BookDetailPage />,
             },
-          ]
-        }
+            {
+              path: "/cart",
+              element: <CartPage />,
+            },
+          ],
+        },
       ],
     },
   ]);
