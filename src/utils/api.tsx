@@ -1,13 +1,6 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
-// function getHeaders() {
-//     return {
-//         "Content-Type": "application/json",
-//         "Authorization": token ? ` ${token}` : "",
-//     };
-// };
-
 export const api = {
     get: async (endpoint: string, token: string) => {
         const response = await fetch(`${BASE_URL}${endpoint}`, {
