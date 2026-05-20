@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { api } from "../utils/api";
-import AllBooks from "../components/Books/Books";
-import bg1 from '../assets/hobbitbg.jpg'
-import Intro from "../components/Intro";
+import BooksPageComponent from "../components/Books/Books";
+import ReusableIntro from "../components/Intro";
+
 export interface book {
   _id: string;
   book_name: string;
@@ -30,24 +30,52 @@ export default function Books() {
     },
   ]);
   const [loading, setLoading] = React.useState(true);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+  const [rowsPerPage, setRowsPerPage] = React.useState(12);
   const [search, setSearch] = React.useState("");
   const [total, setTotal] = React.useState(0);
-  const [category, setCategory] = React.useState("")
-  const [uniqueCate, setUniqueCate] = React.useState<string[]>()
-
+  const [category, setCategory] = React.useState<string[]>([])
+  const [debouncedSearch, setDebouncedSearch] = React.useState('')
+  const [debouncedCategory, setDebouncedCategory] = React.useState<string[]>([])
+  const [uniqueCategory, setUniqueCategory] = React.useState<string[]>()
+  const [authorData, setAuthorData] = React.useState<string[]>()
+  const [author, setAuthor] = React.useState<string[]>([])
+  const [debouncedAuthor, setDebouncedAuthor] = React.useState<string[]>([])
   const token = useAppSelector(s => s.auth.token)
+
+
+  const loadUniqueCategories = async () => {
+    try {
+      const data = await api.get("/book/categories", token ? token : '')
+      if (data) {
+        setUniqueCategory(data.categories)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const loadAuthorsData = async () => {
+    try {
+      const data = await api.get("/book/authors", token ? token : '')
+      if (data) {
+        setAuthorData(data.data)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const loadBooks = async () => {
     try {
-      setLoading(true)
-      const data = await api.get(`/book?page=${page + 1}&limit=${rowsPerPage}&search=${search}&category=${category}`, token ? token : '');
-      const withIds = data.Books.map((item: book) =>
+      const data = await api.post(`/book`, { page: page, limit: rowsPerPage, search: debouncedSearch, category: category, author: author }, token ? token : '');
+      const withIds = data.data.map((item: book) =>
         item._id ? item : { ...item, _id: item._id },
       );
       setBooks(withIds);
       setTotal(data.totalCount);
-      setUniqueCate(data.category)
       setLoading(false)
     } catch (error) {
       if (error) {
@@ -57,37 +85,62 @@ export default function Books() {
   };
 
   useEffect(() => {
-    loadBooks()
-  }, [search, category, page]);
+    if (search !== '' || category.length > 0 || author.length > 0) {
+      setLoading(true)
+      const timer = setTimeout(() => {
+        search ? setDebouncedSearch(search) : ''
+        category ? setDebouncedCategory([...debouncedCategory, ...category]) : []
+        author ? setDebouncedAuthor([...debouncedAuthor, ...author]) : []
+      }, 2500)
+      return () => clearTimeout(timer)
+    } else {
+      loadBooks()
+    }
+  }, [search, category, page, rowsPerPage, author]);
+
+  useEffect(() => {
+    setLoading(true)
+    loadUniqueCategories()
+    loadAuthorsData()
+  }, [])
+
+  useEffect(() => {
+    if (debouncedCategory.length > 0 || debouncedSearch.length > 0 || debouncedAuthor?.length > 0) {
+      loadBooks();
+      setDebouncedSearch('')
+      setDebouncedCategory([])
+      setDebouncedAuthor([])
+    }
+  }, [debouncedCategory, debouncedSearch, debouncedAuthor])
 
   return (
     <>
-      <div className="w-full justify-center mt-2!">
-        <Intro title={'Books'} content={'Browse Books And Request them and Read them...'} src={bg1} />
-          <AllBooks
-            data={books}
-            serverSide={true}
-            total={total}
-            page={page}
-            search={search}
-            rowsPerPage={rowsPerPage}
-            uniqueCategory={uniqueCate}
-            onPageChange={(newPage: number) => setPage(newPage)}
-            onRowsPerPageChange={(newRows: number) => {
-              setRowsPerPage(newRows);
-              setPage(0);
-            }}
-            onSearch={(term: string) => {
-              setSearch(term);
-              setPage(0);
-            }}
-            onCategory={(term: string) => {
-              setCategory(term)
-              setPage(0)
-            }}
-            loading={loading}
-          />
-        </div>
+      <div className="w-full flex flex-col justify-center items-center mt-2!">
+        <ReusableIntro pageName="Books" pageTitle="Books" previousPage="Home " path="books" />
+        <BooksPageComponent
+          data={books}
+          serverSide={true}
+          total={total}
+          page={page}
+          search={search}
+          rowsPerPage={rowsPerPage}
+          uniqueCategory={uniqueCategory}
+          authorsData={authorData ? authorData : []}
+          onPageChange={(newPage: number) => setPage(newPage)}
+          onRowsPerPageChange={(newRows: number) => {
+            setRowsPerPage(newRows);
+            setPage(0);
+          }}
+          onSearch={(term: string) => {
+            setSearch(term);
+            setPage(0);
+          }}
+          setCategory={setCategory}
+          setPage={setPage}
+          setAuthor={setAuthor}
+          loading={loading}
+        />
+      </div>
     </>
   );
 }

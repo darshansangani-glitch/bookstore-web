@@ -759,6 +759,10 @@ Retrieved 2026-04-23, License - CC BY-SA 4.0
   z-index: 3;
   color: red;
 }
+.container:hover .book-btns {
+  opacity: 1;
+}
+
 .container:hover .btn {
   opacity: 1;
 }

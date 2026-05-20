@@ -7,7 +7,7 @@ export default function Footer() {
     const account = ['SIGN IN', 'VIEW CART', 'MY WISHLIST', 'TRACK MY ORDER']
     const help = ['HELP CENTER', 'SUGGESTION', 'REPORT ISSUE', 'CONTACT US']
     return (
-        <div className="w-full h-100 flex flex-col items-center justify-center gap-3">
+        <div className="w-full h-100 flex flex-col items-center justify-center gap-3 pt-20">
             <div className="w-full flex justify-center items-center border-b  flex-col h-80">
                 <div className="flex flex-1 justify-between w-355 ">
                     <span className="w-54.25 h-14 text-[46px] font-unicase font-light"><span className="font-bold">BOOK</span>WORM</span>
@@ -15,32 +15,32 @@ export default function Footer() {
                     <div className="flex flex-col gap-5">
                         <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">About Us</span>
                         <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium ">
-                            {about.map(item => {
-                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            {about.map((item, index) => {
+                                return <button key={index} className="font-normal hover:font-bold!">{item}</button>
                             })}
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
                         <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">Discover</span>
                         <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
-                            {discover.map(item => {
-                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            {discover.map((item, index) => {
+                                return <button key={index} className="font-normal hover:font-bold!">{item}</button>
                             })}
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
                         <span className="w-40.25 h-9.5 text-[28px] text-[#111111] font-prata">My Account</span>
                         <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
-                            {account.map(item => {
-                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            {account.map((item, index) => {
+                                return <button key={index} className="font-normal hover:font-bold!">{item}</button>
                             })}
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
                         <span className="w-31.25 h-9.5 text-[28px] text-[#111111] font-prata">Help</span>
                         <div className="flex flex-1 flex-col items-start gap-2 font-plus text-[16px] text-[#777777] font-medium">
-                            {help.map(item => {
-                                return <button className="font-normal hover:font-bold!">{item}</button>
+                            {help.map((item, index) => {
+                                return <button key={index} className="font-normal hover:font-bold!">{item}</button>
                             })}
                         </div>
                     </div>
