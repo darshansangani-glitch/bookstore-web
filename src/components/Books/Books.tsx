@@ -3,7 +3,7 @@ import { book } from "../../pages/Books";
 import BookFilter from "./Filter";
 import ShowAllBooks from "./AllBooksSection";
 import ReusablePagination from "./Pagination";
-import SearchSection from "./BookFilterSection";
+import SearchSection from "./SearchSection";
 import error404 from "../../assets/error-404-removebg-preview.png";
 import ClipLoading from "../Loading";
 

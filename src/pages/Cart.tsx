@@ -4,7 +4,6 @@ import ReusableIntro from "../components/PageHeader";
 import { api } from "../utils/api";
 import { useAppSelector } from "../redux/hooks";
 import SummarySection from "../components/Cart/Summary";
-import BuyBooksPopup from "../components/Cart/BuyBookPopup";
 import { MdErrorOutline } from "react-icons/md";
 
 export interface CartData {
@@ -16,7 +15,6 @@ export interface CartData {
 }
 export default function CartPage() {
   const token = useAppSelector((s) => s.auth.token);
-  const [buyPopup, setBuyPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
     street: "",
@@ -79,9 +77,6 @@ export default function CartPage() {
   };
   return (
     <div className="w-full flex flex-col justify-center items-center mt-2 font-plus relative ">
-      {buyPopup ? (
-        <BuyBooksPopup setBuyPopup={setBuyPopup} buyPopup={buyPopup} />
-      ) : null}
       <ReusableIntro
         pageName="Cart"
         pageTitle="Books Cart"
