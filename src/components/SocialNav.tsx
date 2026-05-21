@@ -15,8 +15,8 @@ export default function SocialNav() {
   const navigate = useNavigate();
   return (
     <div className="flex justify-center bg-[#F3F2EC] border-b border-b-[#E0E0E0]">
-      <div className="p-5 flex justify-between 2xl:w-355 lg:w-285 md:w-235 items-center">
-        <div className="flex w-43 h-5.5 justify-between text-[14px] ">
+      <div className="p-5 flex justify-between 2xl:w-355 lg:w-285 md:w-235 sm:w-full items-center">
+        <div className="sm:flex w-43 h-5.75 justify-between text-[14px] items-center hidden ">
           <FaFacebookF />
           <FaInstagram />
           <FaLinkedinIn />

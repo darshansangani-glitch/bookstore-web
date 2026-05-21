@@ -2,6 +2,7 @@ import "./App.css";
 import Protected from "./components/Protected.js";
 import AppLayout from "./layout/AppLayout.js";
 import BookDetailPage from "./pages/BookDetailsPage.js";
+import CheckoutPage from "./pages/Checkout.js";
 import Books from "./pages/Books.js";
 import CartPage from "./pages/Cart.js";
 import Home from "./pages/Home.js";
@@ -38,6 +39,10 @@ function App() {
             {
               path: "/books/:id",
               element: <BookDetailPage />,
+            },
+            {
+              path: "/checkout",
+              element: <CheckoutPage />,
             },
             {
               path: "/cart",
