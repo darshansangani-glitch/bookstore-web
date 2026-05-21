@@ -17,7 +17,7 @@ export default function PaymentMethod() {
           0: <CreditCard />,
           1: <UPIInputs />,
           2: <CodSection />,
-        }[active ? active : 0]
+        }[active !== null ? active : 0]
       }
       <div className="flex justify-between gap-5 mt-5 font-semibold text-[20px]">
         <button

@@ -10,6 +10,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import user from "../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
+
 export default function SocialNav() {
   const cartData = useAppSelector((s) => s.booksCart.cart);
   const navigate = useNavigate();

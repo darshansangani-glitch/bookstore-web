@@ -3,10 +3,10 @@ import CheckoutBookList from "./CheckoutBookList";
 
 export default function CheckoutOrderSummary() {
   const rentBooksData = useAppSelector((s) =>
-    s.booksCart.cart.filter((item) => item.orderType == "Rent"),
+    s.booksCart.cart.filter((item) => item.orderType === "Rent"),
   );
   const buyBooksData = useAppSelector((s) =>
-    s.booksCart.cart.filter((item) => item.orderType == "Buy"),
+    s.booksCart.cart.filter((item) => item.orderType === "Buy"),
   );
   const totalRentPrice = rentBooksData
     .reduce((total, book) => total + book.rentPrice, 0)

@@ -3,13 +3,13 @@ import CheckoutBooksCard from "./CheckoutBooksCard";
 
 export default function CheckoutBookList() {
   const orderedBooks = useAppSelector((s) => s.booksCart.cart);
-  const OrderedBookList = orderedBooks.map((book, index) => {
+  const OrderedBookList = orderedBooks.map((book) => {
     return (
       <CheckoutBooksCard
-        key={index}
+        key={book._id}
         src={book.src}
         book_name={book.book_name}
-        price={book.orderType == "Buy" ? book.buyPrice : book.rentPrice}
+        price={book.orderType === "Buy" ? book.buyPrice : book.rentPrice}
         orderType={book.orderType}
       />
     );

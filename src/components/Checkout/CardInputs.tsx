@@ -29,7 +29,7 @@ export default function CardInputs() {
         <label className="w-1/2 space-y-2 text-[18px] flex flex-col">
           <span>CVV</span>
           <input
-            type="text"
+            type="password"
             placeholder="123"
             className="border p-3 rounded-lg border-gray-300"
           />
