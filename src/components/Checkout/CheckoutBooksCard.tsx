@@ -1,9 +1,4 @@
-interface CheckoutBooks {
-  src: string;
-  book_name: string;
-  orderType: string;
-  price: number;
-}
+import { CheckoutBooks } from "../../interfaces/interface";
 
 export default function CheckoutBooksCard(props: CheckoutBooks) {
   return (

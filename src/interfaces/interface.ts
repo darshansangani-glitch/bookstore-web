@@ -20,3 +20,10 @@ export interface PaymentMethodsProps {
   setActive: Dispatch<SetStateAction<number | null>>;
   active: number | null;
 }
+
+export interface CheckoutBooks {
+  src: string;
+  book_name: string;
+  orderType: string;
+  price: number;
+}

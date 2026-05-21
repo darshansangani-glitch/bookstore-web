@@ -6,9 +6,6 @@ import UPIInputs from "./UPIInputs";
 import { useNavigate } from "react-router-dom";
 
 export default function PaymentMethod() {
-  // const [openCredit, setOpenCredit] = useState<Boolean>(false);
-  // const [openUPI, setOpenUPI] = useState<Boolean>(false);
-  // const [openCod, setOpenCod] = useState<Boolean>(false);
   const [active, setActive] = useState<number | null>(0);
   const navigate = useNavigate();
   return (
@@ -31,7 +28,7 @@ export default function PaymentMethod() {
         </button>
         <button className="p-2 py-3 w-1/2 border rounded-lg text-white bg-[#74642F] hover:bg-[#4b3f19]">
           Place Order
-        </button> 
+        </button>
       </div>
     </div>
   );

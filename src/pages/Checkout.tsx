@@ -12,7 +12,7 @@ export default function CheckoutPage() {
         pageTitle="Payment"
         previousPage="Cart"
       />
-      <div className="xl:w-355 md:w-180 flex-col sm:w-170 w-screen flex xl:flex-row gap-5 justify-center my-10">
+      <div className="2xl:w-355 xl:w-280 md:w-180 flex-col sm:w-170 w-full flex xl:flex-row gap-5 justify-center my-10">
         <PaymentMethod />
         <CheckoutOrderSummary />
       </div>
