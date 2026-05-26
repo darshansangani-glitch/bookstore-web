@@ -1,7 +1,5 @@
 import img1 from "../../assets/The Hobbit.webp";
 import img3 from "../../assets/3.jpg";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import bookImg1 from "../../assets/book.png";
 import bgPattern from "../../assets/bg pattern.png";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";

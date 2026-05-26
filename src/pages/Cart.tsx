@@ -5,14 +5,8 @@ import { api } from "../utils/api";
 import { useAppSelector } from "../redux/hooks";
 import SummarySection from "../components/Cart/Summary";
 import { MdErrorOutline } from "react-icons/md";
+import { CartData } from "../interfaces/interface";
 
-export interface CartData {
-  _id?: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
 export default function CartPage() {
   const token = useAppSelector((s) => s.auth.token);
   const [loading, setLoading] = useState(false);
@@ -64,13 +58,10 @@ export default function CartPage() {
   };
   const handleDeleteAddress = async (id: string) => {
     try {
-      setLoading(true)
-      await api.delete(
-        `/user/delete-address/${id}`,
-        token ? token : "",
-      );
+      setLoading(true);
+      await api.delete(`/user/delete-address/${id}`, token ? token : "");
       await loadAddresses();
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -79,8 +70,9 @@ export default function CartPage() {
     <div className="w-full flex flex-col justify-center items-center mt-2 font-plus relative ">
       <ReusableIntro
         pageName="Cart"
+        previousPagePath="/home"
         pageTitle="Books Cart"
-        previousPage="Home "
+        previousPage="Home"
         path="cart"
       />
       <span className="2xl:w-355 flex items-center gap-2 lg:w-285 border-l-7 border-l-[#aa8d36] bg-white mt-5 text-[22px] font-bold rounded-xl p-5 md:w-235">

@@ -1,24 +1,16 @@
-import { IoIosCard } from "react-icons/io";
-import { FiSmartphone } from "react-icons/fi";
-import { BsCash } from "react-icons/bs";
 import { PaymentMethodsProps } from "../../interfaces/interface";
+import { paymentMethods } from "../../data/data";
 
 export default function PaymentMethodModes({
   setActive,
   active,
 }: PaymentMethodsProps) {
-  const paymentMethods = [
-    { name: "Credit/Debit Card", icon: <IoIosCard /> },
-    { name: "UPI/Digital Wallet", icon: <FiSmartphone /> },
-    { name: "Cash on Delivery", icon: <BsCash /> },
-  ];
-
   return (
     <div className="flex flex-col space-y-4">
       {paymentMethods.map((item, index) => {
         return (
           <label
-            className={`border rounded-lg p-3 flex gap-3 border-gray-300 hover:border-gray-500 text-[22px] font-plus items-center font-semibold ${active === index ? "border-gray-500" : ""}`}
+            className={`border rounded-lg p-3 flex gap-3 border-gray-300 hover:border-gray-500 text-xl font-plus items-center font-semibold ${active === index ? "border-gray-500" : ""}`}
             key={item.name}
           >
             <div className="h-4.75 border rounded-2xl px-1 py-1 items-center flex">
