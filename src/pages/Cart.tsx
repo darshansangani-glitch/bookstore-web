@@ -79,11 +79,11 @@ export default function CartPage() {
         <MdErrorOutline size={30} />
         Notes: You Can Only Rent 2 Books At one time!!
       </span>
-      <div className="2xl:w-355 lg:w-285 my-5 md:w-235 flex gap-4">
-        <div className="2xl:w-230 lg:w-150 rounded-2xl bg-white h-fit shadow-xl">
+      <div className="2xl:w-355 lg:w-285 md:w-235 my-5 flex gap-4">
+        <div className="2xl:w-230 lg:w-150 md:w-135 rounded-2xl bg-white h-fit shadow-xl">
           <CartPageTable />
         </div>
-        <div className="2xl:w-120 md:w-100 rounded-2xl bg-white h-fit shadow-xl">
+        <div className="2xl:w-120 lg:w-100 md:w-100 rounded-2xl bg-white h-fit shadow-xl">
           <SummarySection
             setAddOpen={setAddOpen}
             loading={loading}

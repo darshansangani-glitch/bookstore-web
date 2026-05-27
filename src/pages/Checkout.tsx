@@ -47,7 +47,7 @@ export default function CheckoutPage() {
     try {
       console.log(details);
       const parsedDetails = checkoutSchema.parse(details);
-      console.log(parsedDetails)
+      console.log(parsedDetails);
       return null;
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -70,7 +70,6 @@ export default function CheckoutPage() {
       } else {
         console.error("Unexpected error: ", error);
       }
-      return null;
     }
   };
 
@@ -86,7 +85,7 @@ export default function CheckoutPage() {
           newErrors = validateUPIDetails(upiId);
           console.log("newErrors", newErrors);
         }
-        setErrors(newErrors);
+        setErrors(newErrors ? newErrors : null);
       }
       console.log(newErrors);
       if (newErrors == null) {
@@ -117,7 +116,6 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     setCheckoutOrder({
-      ...checkoutOrder,
       purchase_type: type,
       payment_details:
         type === "Credit/Debit"

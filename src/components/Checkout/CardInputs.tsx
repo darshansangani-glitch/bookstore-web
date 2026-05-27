@@ -16,7 +16,6 @@ export default function CardInputs() {
           name="cardNumber"
           id="cardNumber"
           className="border p-3 rounded-lg border-gray-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          aria-errormessage="cardNumber-error"
           required
           onChange={(e) => {
             setPaymentData({
@@ -47,7 +46,6 @@ export default function CardInputs() {
           id="holderName"
           placeholder="John Doe"
           className="border p-3 rounded-lg border-gray-300"
-          aria-errormessage="cardHolderName-error"
           required
           onChange={(e) => {
             setPaymentData({
@@ -79,7 +77,6 @@ export default function CardInputs() {
                 expiry: e.target.value,
               });
             }}
-            aria-errormessage="expiryDate-error"
             required
           />
           {errors !== null && typeof errors !== "string" ? (
@@ -93,10 +90,7 @@ export default function CardInputs() {
         <label className="w-1/2 space-y-2 text-lg flex flex-col">
           <span>CVV</span>
           <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]{3,4}"
-            maxLength={4}
+            type="number"
             placeholder="123"
             name="cvv"
             id="cvv"
@@ -108,12 +102,16 @@ export default function CardInputs() {
               });
             }}
             onWheel={(e) => (e.target as HTMLElement).blur()}
-            aria-errormessage="invalidCvv-error"
             required
           />
           {errors !== null && typeof errors !== "string" ? (
             errors.cvv ? (
-              <span className="text-red-400">{errors.cvv}</span>
+              <div className="flex gap-2 items-center">
+                <span className="text-red-400">{errors.cvv}</span>
+                <span className="text-red-400">
+                  You have added {paymentData.cvv.length} Digits
+                </span>
+              </div>
             ) : null
           ) : (
             ""

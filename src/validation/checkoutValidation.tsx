@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const checkoutSchema = z.object({
-  cardNumber: z.string().regex(new RegExp(/^\d{16}$/), {
-    message: "Must be a 16-digit number",
+  cardNumber: z.string().regex(new RegExp(/^\d{13,19}$/), {
+    message: "Must be a valid card number (13-19 digits)",
   }),
   holderName: z.string().min(1, { message: "Enter Card Holders Name!!" }),
   expiry: z

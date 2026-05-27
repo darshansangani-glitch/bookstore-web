@@ -33,6 +33,7 @@ export default function PageHeader({
               </button>
               <button
                 type="button"
+                disabled={!previousPagePath}
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() =>
                   navigate(previousPagePath ? previousPagePath : "")
