@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import CartCardBuyRent from "./filterCartCard";
 import { useNavigate } from "react-router-dom";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -6,26 +6,18 @@ import { LuClock4, LuBookOpen } from "react-icons/lu";
 import AddAddressForm from "./AddAddressForm";
 import { RiAddLine, RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineHome } from "react-icons/ai";
-import { CartData } from "../../pages/Cart";
-
-interface SummaryProps {
-  loading: boolean;
-  setAddress: React.Dispatch<React.SetStateAction<CartData>>;
-  addresses: CartData[];
-  addOpen: boolean;
-  error: string;
-  setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleAddAddress: () => void;
-  handleDeleteAddress: (id: string) => void;
-}
+import { useEffect, useState } from "react";
+import { addAddress } from "../../redux/features/slice/cartSlice";
+import { SummaryProps } from "../../interfaces/interface";
 
 export default function SummarySection(props: SummaryProps) {
   const user = useAppSelector((s) => s.auth.user);
   const navigate = useNavigate();
-
+  const [selectedAddress, setSelectedAddress] = useState<string>("");
   const rentBooksData = useAppSelector((s) =>
     s.booksCart.cart.filter((item) => item.orderType == "Rent"),
   );
+  const dispatch = useAppDispatch();
   const rentBooksList = rentBooksData.map((items) => {
     return (
       <CartCardBuyRent
@@ -57,7 +49,7 @@ export default function SummarySection(props: SummaryProps) {
           _id={items._id}
           rentPrice={items.rentPrice}
           buyPrice={items.buyPrice}
-        // setBuyPopup={props.setBuyPopup}
+          // setBuyPopup={props.setBuyPopup}
         />
       );
     }
@@ -72,6 +64,11 @@ export default function SummarySection(props: SummaryProps) {
   const subTotal = (
     parseFloat(totalRentPrice) + parseFloat(totalBuyPrice)
   ).toFixed(2);
+  useEffect(() => {
+    if (props.addresses.length > 0) {
+      setSelectedAddress(props.addresses[0]._id ? props.addresses[0]._id : "");
+    }
+  }, [props.addresses]);
   const allAddresses = props.addresses.map((address) => {
     return (
       <label
@@ -84,6 +81,7 @@ export default function SummarySection(props: SummaryProps) {
             name="shippingAddress"
             className="peer appearance-none w-2 h-2   border-gray-300 rounded-full checked:bg-[#74642F] relative transition-all cursor-pointer"
             id={address._id}
+            onChange={() => setSelectedAddress(address._id ? address._id : "")}
             defaultChecked={props.addresses[0]._id === address._id}
           />
         </div>
@@ -104,7 +102,6 @@ export default function SummarySection(props: SummaryProps) {
       </label>
     );
   });
-  console.log("UserName", user.name)
   function getInitials(fullName: string) {
     if (!fullName) return "";
     const nameParts = fullName.split(" ");
@@ -118,13 +115,13 @@ export default function SummarySection(props: SummaryProps) {
     <div className="font-plus p-5 flex flex-col gap-10 rounded-2xl h-fit">
       <div className="flex flex-col gap-5 h-fit">
         <div className="flex flex-col gap-4">
-          <span className="text-[28px] uppercase font-bold">Order Summary</span>
-          <div className="text-[20px] flex flex-col gap-3">
+          <span className="text-3xl uppercase font-bold">Order Summary</span>
+          <div className="text-xl flex flex-col gap-3">
             <div className=" flex flex-col  border-b border-gray-300 p-3 px-5">
               <span className="font-bold text-[16px] uppercase">Contact</span>
-              <div className="text-[18px]">
+              <div className="text-lg">
                 <span className="font-medium flex items-center gap-2 border-b py-3">
-                  <span className="w-15 h-15  rounded-4xl flex items-center justify-center text-[28px] font-bold text-[#74642F] bg-[#b6a56c92] ">
+                  <span className="w-15 h-15  rounded-4xl flex items-center justify-center text-3xl font-bold text-[#74642F] bg-[#b6a56c92] ">
                     {getInitials(user.name)}
                   </span>
                   <div className="flex flex-col">
@@ -186,11 +183,11 @@ export default function SummarySection(props: SummaryProps) {
                   <span className="uppercase text-[16px] font-bold">
                     order details
                   </span>
-                  <div className="text-[18px] flex flex-col gap-2 border-b py-2">
+                  <div className="text-lg flex flex-col gap-2 border-b py-2">
                     <span className="flex gap-2 items-center font-bold">
                       <LuClock4 />
                       Rent
-                      <span className="bg-[#bdae7c] px-2  text-white rounded-2xl text-[14px]">
+                      <span className="bg-[#bdae7c] px-2  text-white rounded-2xl text-sm">
                         {rentBooksList.length} books
                       </span>
                     </span>
@@ -199,11 +196,11 @@ export default function SummarySection(props: SummaryProps) {
                       <span className="font-bold">${totalRentPrice}</span>
                     </span>
                   </div>
-                  <div className="text-[18px] flex flex-col gap-2 border-b py-2">
+                  <div className="text-lg flex flex-col gap-2 border-b py-2">
                     <span className="flex gap-2 items-center font-bold">
                       <LuBookOpen />
                       Buy
-                      <span className="bg-[#bdae7c] px-2  text-white rounded-2xl text-[14px]">
+                      <span className="bg-[#bdae7c] px-2  text-white rounded-2xl text-sm">
                         {buyBooksList.length} books
                       </span>
                     </span>
@@ -212,7 +209,7 @@ export default function SummarySection(props: SummaryProps) {
                       <span className="font-bold">${totalBuyPrice}</span>
                     </span>
                   </div>
-                  <div className="text-[18px]  flex justify-between  gap-2 py-2">
+                  <div className="text-lg  flex justify-between  gap-2 py-2">
                     <span className=" flex gap-1 flex-col font-bold">
                       Total
                       <span>
@@ -224,19 +221,25 @@ export default function SummarySection(props: SummaryProps) {
                       ${subTotal}
                     </span>
                   </div>
-                  <button className="h-10 py-2 bg-[#74642F] text-white rounded-lg hover:bg-[#5a4d26] transition delay-50 duration-150 ease-in-out hover:-translate-y-1 hover:scale-105 ">
+                  <button
+                    className="h-10 py-2 bg-[#74642F] text-white rounded-lg hover:bg-[#5a4d26] transition delay-50 duration-150 ease-in-out hover:-translate-y-1 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!selectedAddress}
+                    onClick={() => {
+                      dispatch(addAddress({ address_id: selectedAddress }));
+                      navigate("/checkout");
+                    }}
+                  >
                     Checkout
                   </button>
                 </div>
               </div>
-
             ) : (
               <div className="flex flex-col items-center gap-3 p-5">
-                <p className="text-[18px] font-semibold text-slate-400">
+                <p className="text-lg font-semibold text-slate-400">
                   No Books For Rent or Buy In Your Cart!!
                 </p>
                 <button
-                  className="border-0 bg-[#998e66] hover:bg-[#74642F] w-full text-[18px] text-white p-3 rounded-2xl"
+                  className="border-0 bg-[#998e66] hover:bg-[#74642F] w-full text-lg text-white p-3 rounded-2xl"
                   onClick={() => {
                     navigate("/books");
                   }}
@@ -251,4 +254,3 @@ export default function SummarySection(props: SummaryProps) {
     </div>
   );
 }
-
