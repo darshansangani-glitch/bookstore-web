@@ -141,6 +141,7 @@ export default function SignupForm({
       <div className="2xl:text-lg md:text-sm text-lg flex justify-center items-center gap-2">
         Already Have an Account?{" "}
         <button
+          type="button"
           className="cursor-pointer text-black font-bold border-b "
           onClick={() => navigate("/login")}
         >
