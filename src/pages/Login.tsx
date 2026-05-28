@@ -1,36 +1,59 @@
-import { useState } from "react";
+import { SubmitEvent, useState } from "react";
 import darkLogo from "../assets/darkLogo.png";
-import groupImg from "../assets/Group.png";
-import { FaArrowRightToBracket } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/features/slice/authSlice";
-import { MdErrorOutline } from "react-icons/md";
+import { loginFormValidation } from "../validation/loginValidation";
+import { z } from "zod";
+import { LoginFormData, LoginFormError } from "../interface/interface";
+import LoginForm from "../components/Login/LoginForm";
+import LoginImageContainer from "../components/Login/LoginImageContainer";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [user, setUser] = useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState<LoginFormError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleLogin = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/user/login`;
+  const validateLoginData = (detail: LoginFormData): LoginFormError | null => {
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        setError(result.message || "Invalid Credentials");
+      const parsedDetails = loginFormValidation.parse(detail);
+      console.log(parsedDetails);
+      return null;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return error.flatten().fieldErrors;
       } else {
-        if (!result.data?.token || !result.data?.user) {
-          setError("Invalid server response. Please try again.");
+        console.log("Validation Failed!!");
+        return {};
+      }
+    }
+  };
+
+  const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newErrors = validateLoginData(user);
+    setError(newErrors);
+    try {
+      if (newErrors === null) {
+        const url = `${import.meta.env.VITE_API_URL}/user/login`;
+        setLoading(true);
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        const result = await response.json();
+        setLoading(false);
+        if (!response.ok) {
+          setError({ email: [result.message || "Invalid credentials"] });
           return;
         }
         dispatch(login({ token: result.data.token, user: result.data.user }));
@@ -38,74 +61,40 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
+      setLoading(false);
       throw error;
     }
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center p-4">
-      <div className="flex 2xl:w-355 lg:w-285 items-center h-screen justify-center">
-        <div className="w-170 p-5 flex flex-col h-150 justify-center items-center gap-5 font-plus border border-gray-300 rounded-tl-2xl rounded-bl-2xl border-r-0">
-          <img src={darkLogo} alt="Logo" />
-          <h1 className="text-4xl font-bold mb-3">Welcome Back User!!</h1>
-          <p className="text-[20px] mb-5 ">
-            Please enter your credentials to log in
-          </p>
-          {error && (
-            <span className="text-red-500 w-120 flex items-center text-[20px] gap-2">
-              <MdErrorOutline />
-              {error}
-            </span>
-          )}
-          <form
-            className="w-full flex flex-col gap-3 justify-center items-center"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <label htmlFor="email" className="text-[20px]">
-              Email Address:
-              <input
-                className="w-120 text-[20px] h-14 px-5 flex items-center justify-center rounded-xl border m-2 mb-4 "
-                type="email"
-                name="email"
-                id="email"
-                placeholder="user12@gmail.com"
-                onChange={(e) => setEmail(e.target.value)}
+    <div className="w-full h-screen flex items-center justify-center p-4 font-plus">
+      <div className="flex 2xl:w-355 lg:w-285 md:w-250 md:mx-0 w-full mx-20 items-center bg-white rounded-3xl h-200 p-10">
+        <div className="md:w-1/2 w-full flex flex-col p-5 2xl:space-y-15 lg:space-y-5 space-y-5">
+          <div className=" flex gap-5  items-center">
+            <img src={darkLogo} alt="Logo" className="" />
+            <span className="font-bold text-4xl ">BookWorm</span>
+          </div>
+          <div className="flex flex-col 2xl:space-y-10 lg:space-y-5 space-y-5  2xl:mx-20 xl:mx-10 lg:mx-5 sm:mx-0">
+            <div className=" items-center justify-center  flex flex-col space-y-3">
+              <span className="2xl:text-5xl text-3xl font-medium">
+                Welcome Back!!
+              </span>
+              <span className="2xl:text-lg lg:text-sm ">
+                Login Now to Buy Exciting Books.
+              </span>
+            </div>
+            <div>
+              <LoginForm
+                handleLogin={handleLogin}
+                error={error ? error : {}}
+                setUser={setUser}
+                user={user}
+                loading={loading}
               />
-            </label>
-            <label htmlFor="password" className="text-[20px]">
-              Password
-              <input
-                className="w-120 text-[20px] h-14 px-5 flex items-center  rounded-xl border m-2 mb-4 "
-                type="password"
-                name="password"
-                id="password"
-                placeholder="~~~~~~~~"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-            <button
-              className="bg-black text-[20px] py-4 w-120 text-white  px-4 rounded-xl hover:bg-[#74642F] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500  "
-              type="button"
-              onClick={handleLogin}
-            >
-              Sign In
-            </button>
-          </form>
+            </div>
+          </div>
         </div>
-        <div className="w-170 p-5 flex flex-col h-150 justify-center items-center gap-5 font-plus border border-gray-300 rounded-br-2xl rounded-tr-2xl border-l-0 bg-black text-white">
-          <img src={groupImg} alt="BookWorm Logo" />
-          <h4 className="text-[20px] ">
-            New to our platform? Sign Up now.
-          </h4>
-          <button
-            className="flex justify-center gap-2 items-center border-0 hover:bg-white hover:text-black text-[18px] font-bold w-38 h-12.45 p-2 text-white bg-[#74642F] rounded-xl "
-            type="button"
-            onClick={() => navigate("/signup")}
-          >
-            <FaArrowRightToBracket />
-            <span>SIGN UP</span>
-          </button>
-        </div>
+        <LoginImageContainer />
       </div>
     </div>
   );
