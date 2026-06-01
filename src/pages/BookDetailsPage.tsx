@@ -7,20 +7,9 @@ import BookImage from "../components/BookDetails/BookImage";
 import BookContent from "../components/BookDetails/BookContent";
 import RelatedBooksSection from "../components/BookDetails/RelatedBooksSection";
 import ClipLoading from "../components/Loading";
+import { BookInfo } from "../interface/interface";
 
-export interface BookInfo {
-  _id: string;
-  book_name: string;
-  category: string;
-  shelf_name: string;
-  quantity: number;
-  description: string;
-  book_image: string;
-  book_image_filename: string;
-  author: string;
-  rent_price: number;
-  buy_price: number;
-}
+
 export default function BookDetailPage() {
   const navigate = useNavigate();
   const param = useParams();
@@ -48,9 +37,8 @@ export default function BookDetailPage() {
       setBook(data.data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
-      setLoading(false)
-      navigate('/books')
+      setLoading(false);
+      navigate("/books");
     }
   };
 
@@ -63,7 +51,7 @@ export default function BookDetailPage() {
   };
   const loadRelatedBooksData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const data = await api.post(
         "/book/related-book",
         {
