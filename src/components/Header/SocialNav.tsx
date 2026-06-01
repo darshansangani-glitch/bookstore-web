@@ -23,7 +23,7 @@ export default function SocialNav() {
     handler: () => setOpen(false),
   });
   return (
-    <div className="w-full flex lg:justify-center  justify-end lg:items-center-safe bg-[#F3F2EC] border-b border-b-[#E0E0E0]">
+    <div className="w-full lg:flex lg:justify-center  hidden  justify-end lg:items-center-safe bg-[#F3F2EC] border-b border-b-[#E0E0E0]">
       <div className="p-5 flex justify-between 2xl:w-355 lg:w-285 md:w-235 sm:w-full items-center">
         <div className="sm:flex hidden w-43 h-5.5 justify-between text-[14px] items-center">
           <FaFacebookF />

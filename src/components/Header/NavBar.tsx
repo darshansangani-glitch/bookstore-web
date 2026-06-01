@@ -1,17 +1,23 @@
 import { Link } from "react-router-dom";
 import { IoReorderThree } from "react-icons/io5";
 import { NavItems } from "../../data/NavBarData";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import NavPopup from "./Nav/NavPopup";
 import useOutsideClick from "../../redux/hooks";
 
-export default function NavBar() {
-  const [open, setOpen] = useState<boolean>(false);
+export default function NavBar({
+  setOpenNav,
+  openNav,
+}: {
+  setOpenNav: Dispatch<SetStateAction<boolean>>;
+  openNav: boolean;
+}) {
+  // const [open, setOpen] = useState<boolean>(false);
   const popupRef = useRef<HTMLDivElement | null>(null);
   useOutsideClick({
     ref: popupRef as React.RefObject<HTMLElement>,
-    handler: () => setOpen(false),
+    handler: () => setOpenNav(false),
   });
   return (
     <div className="flex gap-15 text-[16px] ">
@@ -27,14 +33,14 @@ export default function NavBar() {
         );
       })}
       <div ref={popupRef} className="lg:hidden block relative">
-        <button type="button" onClick={() => setOpen((prev) => !prev)}>
-          {!open ? (
+        <button type="button" onClick={() => setOpenNav((prev) => !prev)}>
+          {!openNav ? (
             <IoReorderThree fontSize={25} className="font-light " />
           ) : (
             <RxCross2 fontSize={25} className="font-light" />
           )}
         </button>
-        {open ? <NavPopup setOpen={setOpen} /> : null}
+        {/* {open ? <NavPopup setOpen={setOpen} /> : null} */}
       </div>
     </div>
   );
