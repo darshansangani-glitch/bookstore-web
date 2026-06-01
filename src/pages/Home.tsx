@@ -8,7 +8,7 @@ import BooksWithOffer from "../components/Home/BooksWithOffer.js";
 import { useAppSelector } from "../redux/hooks.js";
 import { api } from "../utils/api.js";
 import { useEffect, useState } from "react";
-import { BookInfo } from "./BookDetailsPage.js";
+import { BookInfo } from "../interface/interface.js"; 
 
 export default function Home() {
   const [featuredBooks, setFeaturedBooks] = useState<BookInfo[]>([]);
@@ -70,20 +70,18 @@ export default function Home() {
   }, [category, token]);
 
   return (
-    <>
-      <main className="w-screen flex flex-col justify-center">
-        <Slick />
-        <Associate />
-        <FeaturedBooks featuredBooks={featuredBooks} />
-        <BestBook topBook={topBook} />
-        <PopularBooks
-          popularBooks={popularBooks}
-          setCategory={setCategory}
-          uniqueCategories={uniqueCategories}
-        />
-        <Quotes />
-        <BooksWithOffer />
-      </main>
-    </>
+    <div className="w-full flex flex-col justify-center">
+      <Slick />
+      <Associate />
+      <FeaturedBooks featuredBooks={featuredBooks} />
+      <BestBook topBook={topBook} />
+      <PopularBooks
+        popularBooks={popularBooks}
+        setCategory={setCategory}
+        uniqueCategories={uniqueCategories}
+      />
+      <Quotes />
+      <BooksWithOffer />
+    </div>
   );
 }
